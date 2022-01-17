@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+    
+    
+<mapper namespace="com.wit.main.service.impl.MainMapper">
+
+<select id="getDBCheckList" resultType="MainVO">
+SELECT * FROM DBCHECK
+</select>
+
+<update id="updateDBCheckList" parameterType="MainVO">
+UPDATE DBCHECK
+SET DBC_LASTCON = #{DBC_LASTCON},
+DBC_NOWTIME = #{DBC_NOWTIME}
+</update>
+
+</mapper>
+

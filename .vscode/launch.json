@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WhereIsItApplication<WhereIsIt>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.wit.WhereIsItApplication",
+            "projectName": "WhereIsIt",
+            "args": ""
+        }
+    ]
+}
