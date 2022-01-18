@@ -19,89 +19,42 @@
 <script type="text/javascript" src="../../../resource/js/jquery-3.6.0.min.js"></script>
 <script>
 
-//중심좌표
-var mapOptions = {
-    center: new naver.maps.LatLng(37.3595704, 127.105399),
-    zoom: 10
-};
+var HOME_PATH = window.HOME_PATH || '.';
 
-//지도표시
-var map = new naver.maps.Map('map', mapOptions);
+var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147),
+    map = new naver.maps.Map('map', {
+        center: cityhall.destinationPoint(0, 500),
+        zoom: 15
+    }),
+    marker = new naver.maps.Marker({
+        map: map,
+        position: cityhall
+    });
 
-// 마커표시
-var marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng(37.3595704, 127.105399),
-    map: map
+var contentString = [
+        '<div class="iw_inner">',
+        '   <h3>서울특별시청</h3>',
+        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+        '   </p>',
+        '</div>'
+    ].join('');
+
+var infowindow = new naver.maps.InfoWindow({
+    content: contentString
 });
 
-
-
-
-var map = new naver.maps.Map("map", {
-        zoom: 10,
-        center: new naver.maps.LatLng(36.2253017, 127.6460516),
-        zoomControl: true,
-        zoomControlOptions: {
-            position: naver.maps.Position.TOP_LEFT,
-            style: naver.maps.ZoomControlStyle.SMALL
-         }
-    }),
-    markers = [];
-
-var htmlMarker1 = {
-        content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url('+ HOME_PATH +'/img/cluster-marker-1.png);background-size:contain;"></div>',
-        size: N.Size(40, 40),
-        anchor: N.Point(20, 20)
-    },
-    htmlMarker2 = {
-        content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url('+ HOME_PATH +'/img/cluster-marker-2.png);background-size:contain;"></div>',
-        size: N.Size(40, 40),
-        anchor: N.Point(20, 20)
-    },
-    htmlMarker3 = {
-        content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url('+ HOME_PATH +'/img/cluster-marker-3.png);background-size:contain;"></div>',
-        size: N.Size(40, 40),
-        anchor: N.Point(20, 20)
-    },
-    htmlMarker4 = {
-        content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url('+ HOME_PATH +'/img/cluster-marker-4.png);background-size:contain;"></div>',
-        size: N.Size(40, 40),
-        anchor: N.Point(20, 20)
-    },
-    htmlMarker5 = {
-        content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url('+ HOME_PATH +'/img/cluster-marker-5.png);background-size:contain;"></div>',
-        size: N.Size(40, 40),
-        anchor: N.Point(20, 20)
-    };
-`
-function onLoad() {
-    var data = accidentDeath.searchResult.accidentDeath;
-
-    for (var i = 0, ii = data.length; i < ii; i++) {
-        var spot = data[i],
-            latlng = new naver.maps.LatLng(spot.grd_la, spot.grd_lo),
-            marker = new naver.maps.Marker({
-                position: latlng,
-                draggable: true
-            });
-
-        markers.push(marker);
+naver.maps.Event.addListener(marker, "click", function(e) {
+    if (infowindow.getMap()) {
+        infowindow.close();
+    } else {
+        infowindow.open(map, marker);
     }
+});
 
-    var markerClustering = new MarkerClustering({
-        minClusterSize: 2,
-        maxZoom: 8,
-        map: map,
-        markers: markers,
-        disableClickZoom: false,
-        gridSize: 120,
-        icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
-        indexGenerator: [10, 100, 200, 500, 1000],
-        stylingFunction: function(clusterMarker, count) {
-            $(clusterMarker.getElement()).find('div:first-child').text(count);
-        }
-    });
-}
+infowindow.open(map, marker);
 
 </script>
 </html>
