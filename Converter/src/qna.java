@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 //test and Q&A file this is dummy
 public class qna {
-    
+    //2022-01-19 
     public int insertMember(Member m) {
       
         int result = 0;
